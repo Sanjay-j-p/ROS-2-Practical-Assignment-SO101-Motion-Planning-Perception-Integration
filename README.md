@@ -1,0 +1,64 @@
+# Launch Instructions
+
+## 1. Start Isaac Simulation
+```bash
+./launch_isaac.sh   # update path and Ros distribution and other settings if needed to the script to get the issac sim running
+```
+- When the option dialog appears, click **OK**
+- Press **Play** (▶) in the left panel
+
+---
+
+## 2. Build the workspace
+Open a new terminal:
+```bash
+cd ~/so101_ws
+colcon build --symlink-install
+source install/setup.bash
+```
+
+---
+
+## 3. Start MoveIt + Bringup
+Open a new terminal:
+```bash
+source ~/so101_ws/install/setup.bash
+ros2 launch so101_bringup bringup_moveit.launch.py use_fake_hardware:=true
+```
+Wait until you see `move_group ready` in the output.
+
+---
+
+## 4. Start the Pick-and-Place Pipeline
+Open a new terminal:
+```bash
+source ~/so101_ws/install/setup.bash
+ros2 launch so101_state_machine so101_pickup.launch.py
+```
+
+---
+
+## Bonus Features Active
+| Feature | Status |
+|---|---|
+| MoveIt Planning Scene (obstacle avoidance) | yes |
+| Collision objects added dynamically | yes|
+| Recovery behaviour in BT | no|
+| Execution timeout handling |yes |
+
+---
+
+## Useful Debug Commands
+```bash
+# If robot gets stuck or gripper won't release
+ros2 topic pub /isaac_attach_cube std_msgs/msg/Bool "{data: false}"
+
+# Check detected cup pose
+ros2 topic echo /detected_cup_pose
+
+# View camera with bounding box
+ros2 run rqt_image_view rqt_image_view /detected_cup_image
+
+# Check joint states
+ros2 topic echo /joint_states
+```
