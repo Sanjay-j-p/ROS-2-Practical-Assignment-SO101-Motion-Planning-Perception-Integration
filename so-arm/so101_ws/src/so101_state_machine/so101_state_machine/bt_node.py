@@ -77,7 +77,7 @@ class Grabbing(py_trees.behaviour.Behaviour):
 
         self.arm_move = Arm_reach(self.node)
 
-        self.arm_move.add_collision_box(name='target_box',x=0.2335, y=0.0, z=0.08,sx=0.15, sy=0.05, sz=0.16)
+        #self.arm_move.add_collision_box(name='target_box',x=0.2335, y=0.0, z=0.08,sx=0.15, sy=0.05, sz=0.16)      #---------use this for bonus task adding dynamic collision objects to palnning scene
 
         self.arm_pub = self.node.create_publisher(JointTrajectory, '/arm_controller/joint_trajectory', 10)
         self.gripper_pub = self.node.create_publisher(JointTrajectory, '/gripper_controller/joint_trajectory', 10)
